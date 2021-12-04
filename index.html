@@ -10,16 +10,68 @@
 <body>
 
     <div id="navBarCont"></div>
+
+    <div id="main">
+        <button id="getRepoBtn">Get User Repos</button>
+    </div>
    
 </body>
 </html>
 <script type="module">
 
     import navBar from './component/navBar.js';
-    console.log(navBar);
+    import getData from './scripts/getData.js';
+    // console.log(getData);
+
+    var res;
 
     let navBarCont = document.getElementById("navBarCont");
 
     navBarCont.innerHTML = navBar();
+
+    let searchBox = document.getElementById("search-input")
+
+    let DpImg = document.getElementById("profile-img");
+
+    //addEventListner
+
+    searchBox.addEventListener("keypress",makeAPICall)
+
+
+    async function makeAPICall(e){
+        // console.log(e);
+        //an enent gets fired 
+
+        if(e.key === "Enter"){
+
+            let user = searchBox.value;
+
+            //make fetch call;
+
+         res = await getData(user);
+            console.log(res);
+
+            let dp = res.avatar_url;
+            // console.log(dp)
+
+            DpImg.src = dp;
+
+
+
+        }
+       
+    }
+
+    let btn = document.getElementById("getRepoBtn");
+
+    btn.addEventListener("click",getUserRepos);
+
+    async function getUserRepos(){
+         
+        let resRepo = await fetch(res.repos_url);
+        let data = await resRepo .json();
+
+        console.log(data);
+    }
 
 </script>
