@@ -9,10 +9,84 @@
 <body>
 
     <div id="cont">
-
+        <h2>Login</h2>
         
+        <input type="text" id="Username" placeholder="username"><br>
+        <input type="password" id="Password" placeholder="Password"><br>
+
+        <button onclick="Login()" >Submit</button>
 
     </div>
 
 </body>
 </html>
+<script>
+
+   async function Login(){
+
+        let userinfo = {
+
+            username:document.getElementById("Username").value,
+            password: document.getElementById("Password").value
+        }
+
+
+        let userInfo = JSON.stringify(userinfo);
+
+        let url = `https://masai-api-mocker.herokuapp.com/auth/login`;
+
+    let res = await  fetch(url,{
+
+            method:"POST",
+            body:userInfo,
+
+            headers:{
+                "Content-Type":"application/json"
+            }
+
+        })
+
+        let data = await res.json();
+        // console.log(data);
+
+        let userI = JSON.parse(userInfo);
+
+        fetchMyData(userI.username,data.token);
+
+    }
+
+    async function fetchMyData(usName,token){
+        
+        let url1 = `https://masai-api-mocker.herokuapp.com/user/${usName}`;
+
+        let resp = await fetch(url1,{
+            headers:{
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}` 
+            }
+
+        })
+
+        let MyData = await resp.json();
+        console.log(MyData);
+
+        if(MyData.name == ""){
+            alert("please fill valid details")
+        }else{
+
+            if(localStorage.getItem("userName") === null){
+                localStorage.setItem("userName", JSON.stringify([]));
+            }
+
+            let nameArr = JSON.parse( localStorage.getItem("userName"));
+
+            nameArr.push(MyData.name);
+            console.log(nameArr);
+
+            localStorage.setItem("userName",JSON.stringify(nameArr));
+            window.location.href = "index.html";
+        }
+
+    }
+
+</script>

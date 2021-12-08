@@ -37,6 +37,8 @@
 
     let DpImg = document.getElementById("profile-img");
 
+    let NM = document.getElementById("usersName");
+
     //addEventListner
 
     searchBox.addEventListener("keypress",makeAPICall)
@@ -96,5 +98,19 @@
 
         })
     }
+
+    function appendName(){
+
+        let nameArr = JSON.parse(localStorage.getItem("userName"));
+        // console.log(nameArr);
+
+        let n = nameArr[nameArr.length-1];
+
+        // console.log(n);
+
+        NM.textContent = "Welcome " + n;
+
+    }
+    appendName();
 
 </script>
