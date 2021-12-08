@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+
+    <div id="cont">
+        <h2>Signup</h2>
+
+        <input type="text" id="Name" placeholder="Name"/>
+        <br>
+        <input type="email" id="Email" placeholder="Email" />
+        <br>
+        <input type="password" id="Password" placeholder="Password" />
+        <br>
+        <input type="text" id="Username"  placeholder="Username"/>
+        <br>
+        <input type="number" id="Mobile" placeholder="Mobile" />
+        <br>
+        <input type="text" id="description"  placeholder="description"/>
+
+        <br>
+
+        <button onclick="register()">Submit</button>
+        <button>Login</button>
+    </div>
+
+</body>
+</html>
+<script>
+
+  async  function register(){
+
+        let userinfo = {
+            name: document.getElementById("Name").value,
+            email: document.getElementById("Email").value,
+            password: document.getElementById("Password").value,
+            username: document.getElementById("Username").value,
+            mobile: document.getElementById("Mobile").value,
+            description: document.getElementById("description").value
+
+        }
+
+        let userInfo = JSON.stringify(userinfo);
+        console.log(userInfo);
+
+
+        let registerApi = `https://masai-api-mocker.herokuapp.com/auth/register`
+
+   let res =    await  fetch(registerApi,{
+
+            method:"POST",
+            body: userInfo,
+
+            headers:{
+                'Content-Type': "application/json",
+            },
+
+        });
+
+
+        let data = await res.json();
+        console.log(data);
+
+
+        if(data.error == false){
+            window.location.href = "Login.html";
+        }else if(data.error == true){
+            alert("You are already a user")
+        }
+
+    }
+
+
+</script>

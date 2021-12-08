@@ -14,6 +14,8 @@
     <div id="main">
         <button id="getRepoBtn">Get User Repos</button>
     </div>
+
+    <div id="repoName"></div>
    
 </body>
 </html>
@@ -74,6 +76,25 @@
         let data = await resRepo .json();
 
         console.log(data);
+        appendAllRepo(data)
+    }
+
+    function appendAllRepo(repo){
+        let count = 1;
+        let repoN = document.getElementById("repoName");
+        repo.forEach((el)=>{
+            // console.log(el.name);
+
+            let repoName = el.name;
+
+            let p = document.createElement("p")
+            
+            p.textContent = count + ". " + repoName;
+
+            repoN.append(p);
+            count++;
+
+        })
     }
 
 </script>

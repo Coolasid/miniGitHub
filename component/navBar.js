@@ -22,8 +22,13 @@ function navBar(){
             <li>Issues</li>
             <li>Marketplace</li>
             <li><a href="explore.html"> Explore</a></li>
+            <li><a href="Signup.html"> Signup</a></li>
+            <li><a href="Login.html"> Login</a></li>
+            <li id= "usersName"></li>
         </ul>
     </div>
+
+ 
 
     <div id="profile">
         <img id="profile-img"
